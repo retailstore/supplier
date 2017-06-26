@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+<style>
+
+.sidenav {
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #A9A9A9;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    margin: 8px 0 0 8px;
+}
+
+.sidenav div{
+	padding: 0px 8px 8px 32px;
+     color: #696969;
+     transition: 0.3s;
+}
+
+div input[type="search"]{
+	border-radius:6px;
+    padding-left: 32px;
+    height: 35px;
+    width: 175px;
+    
+}
+div input[type="radio"]{
+	padding-left:60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #696969;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.success-box {
+	position: absolute;
+	height: 125px;
+	width: 30%;
+	margin: 20% 0 0 20%;
+	z-index: 2000;
+	left: 0px;
+	top: -100px;
+	background: linear-gradient(#e5eaef 5%, rgb(109, 192, 241) 100%) #e5eaef;
+	border: 1px solid blue;
+	padding-top: 15px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+span {
+	display: inline-block;
+}
+</style>
+</head>
+<body>
+<form id="content">
+	<div id="mySidenav" class="sidenav">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&lt;</a>
+		<div><input type="search" placeholder="Please enter Invoice#"></div>
+		<br>
+		<div style="padding-left:60px; font-weight: bold">
+		<input id="rd1" type="radio" name="radio1" value="PGIN1006">PGIN1006<br><br>
+		<input id="rd2" type="radio" name="radio1" value="ULIN1504">ULIN1504<br><br>
+		<input id="rd3" type="radio" name="radio1" value="PGIN1404">PGIN1404<br><br>
+		<input id="rd4" type="radio" name="radio1" value="ITIN2903">ITIN2903<br><br>
+		<input id="rd5" type="radio" name="radio1" value="PGIN2803">PGIN2803<br><br>
+		</div>
+		<br><br>
+		<center>
+		<input type="button" value="Search" onclick="#" class="btn-1">
+		<input type="button" value="Check Status" onclick="getPOValue()" class="btn-1"></center>
+	</div>
+
+	<div id="main">
+		<image src="pglogo.png" id="logo"><br>
+		<label id="date">Date:- <label id="thetoday"></label></label>
+		<span style="font-size:30px;cursor:pointer" onclick="openNav()" id="open">&gt; </span>
+		<br><br>
+
+		<div class="success-box" style="display:none;">
+			<a id="close" href="#" style="float: right;">[x]</a>
+			<center>
+				Updated successfully!! 
+				<br><br>
+				<div id="display" class="message value"></div>
+			</center>		
+		</div>
+		<div class="flex-container">
+			<div class="flex-item">
+				<span id="tag">Invoice#</span>
+				<input id="iv" type="text" onload="getPOValue()" class="value">
+			</div>
+			<br>
+			<div class="flex-item">
+				<span id="tag">Lot#</label></span>
+				<select id="selectLot" class="value" name="lot" onchange="statusPO()">
+					<option>Select</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+				</select>
+				<br><br>
+			</div>
+		</div>
+		<div class="flex-container">	
+			<div class="flex-item">
+				<span id="tag">PO#</label></span>
+				<input id="po" class="value" type="text" onload="getPOValue()">
+				<br><br>
+			</div>
+		</div>
+		<div class="flex-container">	
+			<div class="flex-item">
+				<span id="tag">Status Update</label></span>
+				<span><input type="text" class="text-area"></span>
+			</div>
+		</div><br><br><br>
+		<center>
+			<input id="Update" type="button" value="Update" class="btn-1">
+			<input type="button" onclick="back()" value="Back" class="btn-1">
+		</center>
+	</div>
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+	
+	var month = new Array();
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "June";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+
+		var date=new Date();
+		var mName = month[date.getMonth()];
+
+		var day=date.getDate();
+		<!-- var month=date.getMonth()+1; -->
+		var year=date.getFullYear();
+		if(day<10)
+			day="0"+day;
+		var today=mName+" "+day+", "+year;
+		document.getElementById("thetoday").innerHTML=String(today);
+	
+function openNav() {
+    document.getElementById("mySidenav").style.width = "300px";
+    document.getElementById("main").style.marginLeft = "300px";
+	document.getElementById("open").style.visibility = "hidden";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+	document.getElementById("open").style.visibility = "visible";
+
+}
+function getPOValue(){
+	if(document.getElementById("rd1").checked)
+	{
+		document.getElementById("iv").value=document.getElementById("rd1").value;
+		document.getElementById("po").value="PGPO2605";
+	}
+	if(document.getElementById("rd2").checked)
+	{
+		document.getElementById("iv").value=document.getElementById("rd2").value;
+		document.getElementById("po").value="HULPO1504";
+	}
+	if(document.getElementById("rd3").checked)
+	{
+		document.getElementById("iv").value=document.getElementById("rd3").value;
+		document.getElementById("po").value="PGPO1404";
+	}
+	if(document.getElementById("rd4").checked)
+	{
+		document.getElementById("iv").value=document.getElementById("rd4").value;
+		document.getElementById("po").value="ITPO2903";
+	}
+	if(document.getElementById("rd5").checked)
+	{
+		document.getElementById("iv").value=document.getElementById("rd5").value;
+		document.getElementById("po").value="PGPO2803";
+	}
+}
+
+function statusPO(){
+	document.getElementById("lot").innerHTML=document.getElementById("selectLot").value;
+	document.getElementById("po1").innerHTML=document.getElementById("po").value;
+	document.getElementById("displayDiv").style.display="block";
+}
+
+function back () {
+	window.location.href = "B_Welcome.html"
+}
+
+$("#Update").click(function() {
+	$(".success-box").toggle();
+});
+
+$("#close").click(function() {
+	$(".success-box").hide();
+});
+</script>
+     
+</body>
+</html> 
