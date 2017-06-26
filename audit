@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Audit Trail</title>
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
+		<style type="text/css">
+            .circle { 
+                width:1%;
+                padding:10px 11px;
+                margin:0 auto;
+                border:2px solid #a1a1a1;
+                border-radius:25px;
+                background-color:green;
+            }
+			
+			.circle_blue {
+				background-color:blue;
+			}
+			
+			.circle_green {
+				background-color:green;
+			}
+			
+			.circle_yellow {
+				background-color:#ff8000;
+			}
+			
+			table {
+				margin: 0 auto;
+				margin-top: 10px;
+				text-align: center;
+			}
+			
+
+
+			
+			.details {
+				display: flex;
+				position: center;
+			}
+			
+			.l-margin {
+				margin-left: 50px;
+			}
+		
+			
+			body {
+				font-family: "Lato", sans-serif;
+			}
+			
+			ul {
+				text-align: left;
+			}
+			
+			.status {
+				color: blue;
+			}
+			
+			.stat_2 {
+				color: #ff8000;
+			}
+			
+			.stat_3, .stat_4, .stat_5 {
+				display: none;
+			}
+
+			.flex-item {
+				width: 50%;
+			}
+        </style>	
+	</head>
+	<body>
+		<div id="content">
+			
+			<table>
+				<tr>
+					<td id="tag">PO#</td>
+					<td class="value">PGPO2605</td>
+					<td style="width:80px;"></td>
+					<td id="tag">Lot#</td>
+					<td class="value">1</td>
+				</tr>
+			</table>
+			<center>
+			<div style="overflow:auto">
+				<table cellspacing="10" style="width:100%;">
+					<tr>
+						<td>P & G Buyer</td><td></td><td>Supplier</td><td></td><td>SGS Lab</td><td></td><td>Expeditor India</td>
+						<td></td><td>Expeditor US</td><td></td><td>P & G Warehouse</td><td></td><td>Covance Lab</td><td></td><td>Manufacturer</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="circle circle_green"></div>
+						</td>
+						<td>&#x2192</td>
+						<td>
+							<div class="circle circle_green"></div>
+						</td>
+						<td>&#x2192</td>
+						<td>
+							<div class="circle circle_yellow"></div>
+						</td>
+						<td>&#x2192</td>
+						<td>
+							<div class="circle circle_blue"></div>
+						</td>  
+						<td>&#x2192</td>				
+						<td>
+							<div class="circle circle_blue"></div>
+						</td>
+						<td>&#x2192</td>
+						<td>
+							<div class="circle circle_blue"></div>
+						</td> 
+						<td>&#x2192</td>				
+						<td>
+							<div class="circle circle_blue"></div>
+						</td>
+						<td>&#x2192</td>
+						<td>
+							<div class="circle circle_blue"></div>
+						</td>                  
+					</tr>
+					<tr>
+						<td>2 Jun</td><td></td><td>4 Jun</td><td></td><td>6 Jun</td>
+					</tr>
+				</table>
+			</div>
+			<ul>
+				<li class="status stat_1">PO has been created and is sent to Supplier for processing.</li>
+				<li class="status stat_2">Lot has been received by Supplier & shipped to SGS Lab for testing and it is in process at SGS Lab.</li>
+				<li class="status stat_3">Lot has been tested & passed by SGS Lab to Expeditor India for shipment to US</li>
+				<li class="status stat_4">Lot has been Shipped by Expeditor India to US but there is some delay at US Port</li>
+				<li class="status stat_5">Lot has been cleared by Expeditor US and delivered to P&G Warehouse</li>
+			</ul>
+			<input class="btn-1" id="back" type="submit" name="back" onclick="back()" value="Back">
+			</center>			
+		</div>
+	</body>
+	<script>
+		function back() {
+			window.location.href = "C_CheckPurchaseOrderStatus.html"
+		}
+	</script>
+</html>
